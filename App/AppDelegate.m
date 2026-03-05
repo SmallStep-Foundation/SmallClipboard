@@ -6,6 +6,7 @@
 #import "AppDelegate.h"
 #import "ClipboardWindow.h"
 #import "SSMainMenu.h"
+#import "SSAboutPanel.h"
 #import "SSHostApplication.h"
 #import "SSWindowStyle.h"
 
@@ -30,6 +31,9 @@
 #if !TARGET_OS_IPHONE
     SSMainMenu *menu = [[SSMainMenu alloc] init];
     [menu setAppName:@"SmallClipboard"];
+    [menu setAboutAppName:@"SmallClipboard"];
+    [menu setAboutVersion:@"1.0"];
+    [menu setAboutTarget:self];
     NSArray *items = [NSArray arrayWithObjects:
         [SSMainMenuItem itemWithTitle:@"Show History" action:@selector(showWindow:) keyEquivalent:@"h" modifierMask:NSCommandKeyMask target:self],
         [SSMainMenuItem itemWithTitle:@"Clear History" action:@selector(clearHistory:) keyEquivalent:@"" modifierMask:0 target:self],
@@ -50,6 +54,11 @@
 - (void)clearHistory:(id)sender {
     (void)sender;
     [_mainWindow clearHistory];
+}
+
+- (void)showAbout:(id)sender {
+    (void)sender;
+    [SSAboutPanel showWithAppName:@"SmallClipboard" version:@"1.0"];
 }
 
 #if defined(GNUSTEP) && !__has_feature(objc_arc)
