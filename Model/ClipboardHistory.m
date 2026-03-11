@@ -48,11 +48,11 @@ static const NSTimeInterval kPollInterval = 0.5;
 
 - (NSString *)historyFilePath {
     id<SSFileSystem> fs = [SSFileSystem sharedFileSystem];
-    NSString *base = [fs applicationSupportDirectory];
-    NSString *dir = [base stringByAppendingPathComponent:@"SmallClipboard"];
     NSError *err = nil;
-    if (![fs createDirectoryAtPath:dir error:&err]) {
-        return [dir stringByAppendingPathComponent:kHistoryFileName];
+    NSString *dir = [fs applicationSupportSubdirectoryForAppName:@"SmallClipboard" subpath:nil create:YES error:&err];
+    if (!dir) {
+        NSString *base = [fs applicationSupportDirectory];
+        dir = [base stringByAppendingPathComponent:@"SmallClipboard"];
     }
     return [dir stringByAppendingPathComponent:kHistoryFileName];
 }
